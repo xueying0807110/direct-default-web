@@ -313,6 +313,11 @@
     let selectedProductPrice = '';
     let selectedNoBuy = '0';
 
+    let initialDefaultProduct = '';
+    let initialDefaultProductImage = '';
+    let initialDefaultProductPrice = '';
+    let productOptionOrder = '';
+
     let totalClicks = 0;
     let optionClicks = 0;
     let continueClicks = 0;
@@ -381,6 +386,7 @@
       if (!Array.isArray(window.PRODUCTS)) return;
 
       const randomizedProducts = shuffleArray(window.PRODUCTS);
+      productOptionOrder = randomizedProducts.map((product) => product.name).join('|') + '|I would like to look for more alternatives';
       optionList.innerHTML = '';
 
       randomizedProducts.forEach((product) => {
@@ -422,6 +428,9 @@
 
       const defaultOption = optionList.querySelector('.custom-option:not(.no-buy-option)');
       if (defaultOption) {
+        initialDefaultProduct = defaultOption.dataset.name || '';
+        initialDefaultProductImage = defaultOption.dataset.image || '';
+        initialDefaultProductPrice = '$6.5';
         selectOption(defaultOption);
       }
     }
@@ -468,6 +477,15 @@
         optionClicks: String(optionClicks),
         continueClicks: String(continueClicks),
         invalidContinueClicks: String(invalidContinueClicks),
+
+        defaultOption: initialDefaultProduct,
+        initialDefaultOption: initialDefaultProduct,
+        initialDefaultProduct: initialDefaultProduct,
+        initialDefaultProductImage: initialDefaultProductImage,
+        initialDefaultProductPrice: initialDefaultProductPrice,
+        finalSelectedProduct: selectedProductName,
+        selectionChanged: selectedProductName === initialDefaultProduct ? '0' : '1',
+        productOptionOrder: productOptionOrder,
 
         selectedProduct: selectedProductName,
         selectedPrice: selectedProductPrice,
